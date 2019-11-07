@@ -55,7 +55,7 @@ const Message = ({ y }) => {
   });
   const margin = interpolate(y, {
     inputRange: [-32, 0],
-    outputRange: [16, 12],
+    outputRange: [14, 8],
     extrapolateRight: Extrapolate.CLAMP,
   });
   return (
