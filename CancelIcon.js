@@ -2,7 +2,7 @@ import React from 'react';
 import Animated from 'react-native-reanimated';
 import Svg, { Circle } from 'react-native-svg';
 import * as Haptics from 'expo-haptics';
-import { FontAwesome } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 
 const HEADER_ICON_SIZE = 48;
 const STROKE_WIDTH = 2;
@@ -10,7 +10,8 @@ const RADIUS = (HEADER_ICON_SIZE - STROKE_WIDTH) / 2;
 const HEADER_ICON_BORDER_CIRCUMFERENCE = 2 * Math.PI * RADIUS;
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
-const CameraIcon = ({ y }) => {
+const CancelIcon = ({ y }) => {
+  y = Animated.multiply(y, -1);
   const hasVibrated = new Animated.Value(false);
   const strokeDashoffset = Animated.interpolate(y, {
     inputRange: [-80, 0],
@@ -96,7 +97,7 @@ const CameraIcon = ({ y }) => {
           borderRadius: HEADER_ICON_SIZE / 2,
         }}
       >
-        <FontAwesome name="camera" size={20} color="#49322F" />
+        <Feather name="x" size={30} color="#49322F" />
       </Animated.View>
       <Animated.View
         style={{
@@ -114,10 +115,10 @@ const CameraIcon = ({ y }) => {
           borderRadius: HEADER_ICON_SIZE / 2,
         }}
       >
-        <FontAwesome name="camera" size={20} color="#F3EFE6" />
+        <Feather name="x" size={30} color="#F3EFE6" />
       </Animated.View>
     </Animated.View>
   );
 };
 
-export default CameraIcon;
+export default CancelIcon;
