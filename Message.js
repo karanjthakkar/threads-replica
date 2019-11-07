@@ -22,21 +22,22 @@ const {
   block,
   multiply,
   abs,
+  or,
   SpringUtils,
   interpolate,
   Extrapolate,
+  greaterThan,
 } = Animated;
 
-const translationX = new Value(0);
-const velocityX = new Value(0);
-const state = new Value(State.UNDETERMINED);
-const clock = new Clock();
-const finished = new Value(0);
-const position = new Value(0);
-const velocity = new Value(0);
-const time = new Value(0);
-
-const Message = () => {
+const Message = ({ y }) => {
+  const translationX = new Value(0);
+  const velocityX = new Value(0);
+  const state = new Value(State.UNDETERMINED);
+  const clock = new Clock();
+  const finished = new Value(0);
+  const position = new Value(0);
+  const velocity = new Value(0);
+  const time = new Value(0);
   const shadowOpacity = interpolate(translationX, {
     inputRange: [-4, 0, 4],
     outputRange: [0.3, 0, 0.3],
@@ -52,6 +53,11 @@ const Message = () => {
     outputRange: [0, 5],
     extrapolateLeft: Extrapolate.CLAMP,
   });
+  const margin = interpolate(y, {
+    inputRange: [-32, 0],
+    outputRange: [16, 12],
+    extrapolateRight: Extrapolate.CLAMP,
+  });
   return (
     <View>
       <Animated.View
@@ -60,7 +66,7 @@ const Message = () => {
           position: 'absolute',
           justifyContent: 'center',
           left,
-          opacity: cond(Animated.greaterThan(right, 0), 0, 1),
+          opacity: cond(greaterThan(right, 0), 0, 1),
           top: 0,
           bottom: 0,
         }}
@@ -89,7 +95,7 @@ const Message = () => {
             shadowOpacity,
             shadowRadius: 8,
             flexDirection: 'row',
-            marginBottom: 12,
+            marginBottom: margin,
             transform: [
               {
                 translateX: cond(
@@ -166,7 +172,7 @@ const Message = () => {
           position: 'absolute',
           justifyContent: 'center',
           right,
-          opacity: cond(Animated.greaterThan(left, 0), 0, 1),
+          opacity: cond(greaterThan(left, 0), 0, 1),
           top: 0,
           bottom: 0,
         }}

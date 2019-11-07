@@ -26,7 +26,9 @@ const Content = ({ y, height }) => {
           paddingTop: Animated.add(height, 12, insets.top),
         }}
       >
-        <Message />
+        <Message y={y} />
+        <Message y={y} />
+        <Message y={y} />
       </Animated.View>
     </Animated.ScrollView>
   );
