@@ -60,6 +60,7 @@ const Message = () => {
           position: 'absolute',
           justifyContent: 'center',
           left,
+          opacity: cond(Animated.greaterThan(right, 0), 0, 1),
           top: 0,
           bottom: 0,
         }}
@@ -165,6 +166,7 @@ const Message = () => {
           position: 'absolute',
           justifyContent: 'center',
           right,
+          opacity: cond(Animated.greaterThan(left, 0), 0, 1),
           top: 0,
           bottom: 0,
         }}
