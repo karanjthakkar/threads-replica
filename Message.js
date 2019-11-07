@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Image, Text } from 'react-native';
 import Animated, { Easing } from 'react-native-reanimated';
 import { State, PanGestureHandler } from 'react-native-gesture-handler';
@@ -30,14 +30,25 @@ const {
 } = Animated;
 
 const Message = ({ y }) => {
-  const translationX = new Value(0);
-  const velocityX = new Value(0);
-  const state = new Value(State.UNDETERMINED);
-  const clock = new Clock();
-  const finished = new Value(0);
-  const position = new Value(0);
-  const velocity = new Value(0);
-  const time = new Value(0);
+  const [state, setState] = useState({
+    translationX: new Value(0),
+    handlerState: new Value(State.UNDETERMINED),
+    clock: new Clock(),
+    finished: new Value(0),
+    position: new Value(0),
+    velocity: new Value(0),
+    time: new Value(0),
+  });
+  const {
+    translationX,
+    velocityX,
+    handlerState,
+    clock,
+    finished,
+    position,
+    velocity,
+    time,
+  } = state;
   const shadowOpacity = interpolate(translationX, {
     inputRange: [-4, 0, 4],
     outputRange: [0.3, 0, 0.3],
@@ -75,7 +86,7 @@ const Message = ({ y }) => {
       </Animated.View>
       <PanGestureHandler
         onHandlerStateChange={({ nativeEvent }) => {
-          state.setValue(nativeEvent.state);
+          handlerState.setValue(nativeEvent.state);
         }}
         onGestureEvent={event([{ nativeEvent: { translationX, velocityX } }], {
           useNativeDriver: true,
@@ -99,7 +110,7 @@ const Message = ({ y }) => {
             transform: [
               {
                 translateX: cond(
-                  neq(state, State.END),
+                  neq(handlerState, State.END),
                   [stopClock(clock), translationX],
                   [
                     cond(clockRunning(clock), 0, [
