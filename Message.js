@@ -85,6 +85,7 @@ const Message = ({ y }) => {
         <CancelIcon y={translationX} />
       </Animated.View>
       <PanGestureHandler
+        minDeltaX={4}
         onHandlerStateChange={({ nativeEvent }) => {
           handlerState.setValue(nativeEvent.state);
         }}
